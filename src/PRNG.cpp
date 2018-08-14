@@ -34,8 +34,8 @@ namespace csci480 {
 
   int32_t PRNG::next(int32_t a, int32_t b) {
     if (b <= a) return a;
-    uint64_t n = ((int64_t) b) - ((int64_t) a) + 1L;
-    uint64_t x = (((uint64_t) next()) << 32) | next();
+    int64_t n = ((int64_t) b) - ((int64_t) a) + 1L;
+    int64_t x = UINT64_C(0x7FFFFFFFFFFFFFFF) & ((((uint64_t) next()) << 32) | next());
     return int32_t(a + (x % n));
   }
 
@@ -70,16 +70,16 @@ namespace csci480 {
   void PRNG::ok() {
     PRNG prng(101);
 
-    assert(prng.next(1,4) == 1);
+    assert(prng.next(-9,7) == -8);
     assert(prng.next(INT32_MIN,INT32_MAX) == -1716125422);
-    
-    assert(prng.next(1,4) == 2);
+
+    assert(prng.next(-9,7) == 3);
     assert(prng.next(INT32_MIN,INT32_MAX) == 96111003);
     
-    assert(prng.next(1,4) == 2);
+    assert(prng.next(-9,7) == -4);
     assert(prng.next(INT32_MIN,INT32_MAX) == 1736830095);
     
-    assert(prng.next(1,4) == 2);
+    assert(prng.next(-9,7) == -4);
     assert(prng.next(INT32_MIN,INT32_MAX) == 1692926503);
     
     int64_t seeds[] = {0,1,-1,5,-5};
