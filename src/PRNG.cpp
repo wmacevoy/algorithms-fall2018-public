@@ -68,12 +68,28 @@ namespace csci480 {
   }
   
   void PRNG::ok() {
+    PRNG prng(101);
+
+    assert(prng.next(1,4) == 1);
+    assert(prng.next(INT32_MIN,INT32_MAX) == -1716125422);
+    
+    assert(prng.next(1,4) == 2);
+    assert(prng.next(INT32_MIN,INT32_MAX) == 96111003);
+    
+    assert(prng.next(1,4) == 2);
+    assert(prng.next(INT32_MIN,INT32_MAX) == 1736830095);
+    
+    assert(prng.next(1,4) == 2);
+    assert(prng.next(INT32_MIN,INT32_MAX) == 1692926503);
+    
     int64_t seeds[] = {0,1,-1,5,-5};
     for (auto seed : seeds) {
       for (int bins = 2; bins <= 32; ++bins) {
         testBins(seed,bins,100000);
       }
     }
+
+    
   }
 
 }

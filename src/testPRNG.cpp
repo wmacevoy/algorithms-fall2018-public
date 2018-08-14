@@ -1,4 +1,5 @@
 #include <iostream>
+#include <assert.h>
 #include "PRNG.h"
 
 int main()
