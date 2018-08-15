@@ -98,6 +98,18 @@ public class PolyLog {
         }
     }
 
+    public void power(double value) {
+        p[0] = value;
+    }
+
+    public void logPower(double value) {
+        q[0] = value;
+    }
+
+    public void constant(double value) {
+        c[0] = value;
+    }
+
     public double power() {
         return p[0];
     }
@@ -112,6 +124,64 @@ public class PolyLog {
 
     public boolean valid() {
         return state >= 3;
+    }
+
+    public static double value(double c, double p, double q, double x) {
+        return c * Math.pow(x, p) * Math.pow(Math.log(x), q);
+    }
+
+    public double value(double x) {
+        return value(constant(), power(), logPower(), x);
+    }
+
+    public static double inverse(double c, double p, double q, double y) {
+        if (q == 0) {
+            return Math.pow(y / c, 1 / p);
+        }
+        if (p == 0) {
+            return Math.exp(Math.pow(y / c, 1 / q));
+        }
+        if (p / q > 0) {
+            double z = 1 / q * Math.log(y / c) + Math.log(p / q);
+            double x = exp(Math.min(z, 0)) + Math.max(z, 0);
+            double eps0 = Double.MAX_VALUE, eps1 = Double.MAX_VALUE;
+            for (;;) {
+                double eps = (x + Math.log(x)) - z;
+                x = x - (eps) / (1 + 1 / x);
+                eps0 = Math.abs(eps);
+                if (eps0 < 1e-6) {
+                    if (eps0 < eps1) {
+                        eps1 = eps0;
+                    } else {
+                        break;
+                    }
+                }
+            }
+            return Math.exp((q / p) * x);
+        } else {
+            double z = -1 / q * Math.log(y / c) + Math.log(-q / p);
+            if (z < 1) return Double.NaN;
+            double x = Math.max(1 + Math.sqrt(2 * (z - 1)), z);
+            double eps0 = Double.MAX_VALUE, eps1 = Double.MAX_VALUE;
+            for (;;) {
+                double eps = (x - Math.log(x)) - z;
+                x = x - (eps) / (1 - 1 / x);
+                eps0 = Math.abs(eps);
+                if (eps0 < 1e-6) {
+                    if (eps0 < eps1) {
+                        eps1 = eps0;
+                    } else {
+                        break;
+                    }
+                }
+            }
+            return Math.exp(-(q / p) * x);
+        }
+
+    }
+
+    public double inverse(double y) {
+        return inverse(constant(), power(), logPower(), y);
     }
 
 }
