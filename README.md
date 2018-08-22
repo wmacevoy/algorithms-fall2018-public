@@ -11,3 +11,7 @@ bin/testXXXX
 
 algorithms - netbeans 8.2 maven project (with junit tests)
 
+## Python3
+
+unittest - $ python3 python/prngTest.py
+
