@@ -1,0 +1,74 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 15.04.0 ] */
+
+/* [wxMaxima: title   start ]
+Example of Solving Fibonacci Sequence and Work Sequence
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: comment start ]
+Press alt-enter (windows) or command-enter (mac) to run a cell.  
+You can re-run the entire workbook with "Evaluate All Cells" under the Cell Menu
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+First load the "solve_rec" (solve recurrance relation) package in maxima.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+load("solve_rec")$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Now name the solution to the fibonacci recurrence relation "fibonacci"
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+fibonacci: solve_rec(f[n]=f[n-1]+f[n-2],f[n],f[0]=0,f[1]=1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Now keep just the right hand side of the solution as "fib"
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+fib: rhs(fibonacci);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Same idea for operations and ops
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+operations: solve_rec(w[n]=7+w[n-1]+w[n-2],w[n],w[0]=2,w[1]=2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ops: rhs(operations);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+for k:1 thru 10 do print(k,float(subst(n=k,fib)),float(subst(n=k,ops)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+nMax: 10;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+nFib: makelist([k,subst(n=k,fib)],k,1,nMax);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+nOps: makelist([k,subst(n=k,ops)],k,1,nMax);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+phi: (sqrt(5)+1)/2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete,nFib],(1/sqrt(5))*phi^n],[n,1,nMax],[style, points, lines], [color, red, blue],[legend, "fibonacci", "approx"]);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
