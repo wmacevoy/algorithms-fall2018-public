@@ -23,6 +23,8 @@ public class Natjecanje {
     int reserves;
     boolean[] haveBoat, haveReserve;
 
+    int missed;
+
     void read() {
         Scanner in = new Scanner(System.in);
         teams = in.nextInt();
@@ -37,7 +39,7 @@ public class Natjecanje {
             int team = in.nextInt();
             haveBoat[team - 1] = false;
         }
-        for (int i = 0; i < damaged; ++i) {
+        for (int i = 0; i < reserves; ++i) {
             int team = in.nextInt();
             haveReserve[team - 1] = true;
         }
@@ -56,7 +58,7 @@ public class Natjecanje {
         for (int i = 0; i < teams; ++i) {
             if (haveReserve[i]) {
                 int uses = 0;
-                if (i > 0 && !haveBoat[i - 1]) {
+                if (i - 1 >= 0 && !haveBoat[i - 1]) {
                     ++uses;
                 }
                 if (i + 1 < teams && !haveBoat[i + 1]) {
@@ -66,7 +68,7 @@ public class Natjecanje {
                     haveReserve[i] = false;
                     --reserves;
                 } else if (uses == 1) {
-                    if (i > 0 && !haveBoat[i - 1]) {
+                    if (i - 1 >= 0 && !haveBoat[i - 1]) {
                         haveBoat[i - 1] = true;
                         haveReserve[i] = false;
                         --reserves;
@@ -82,14 +84,71 @@ public class Natjecanje {
         }
     }
 
+    int minimize(int i, int j) {
+        if (i == j) {
+            return (haveBoat[i] || haveReserve[i]) ? 0 : 1;
+        }
+
+        if (haveBoat[i] && !haveReserve[i]
+                || !haveBoat[i] && haveReserve[i]) {
+            return minimize(i + 1, j);
+        }
+
+        if (haveReserve[i]) {
+            if (!haveBoat[i + 1]) {
+                haveBoat[i + 1] = true;
+                int partial = minimize(i + 1, j);
+                haveBoat[i + 1] = false;
+                return partial;
+            } else {
+                return minimize(i + 1, j);
+            }
+        } else {
+            if (haveReserve[i + 1]) {
+                int min0 = 1 + minimize(i + 1, j);
+                haveBoat[i] = true;
+                haveReserve[i + 1] = false;
+                int min1 = minimize(i + 1, j);
+                haveBoat[i] = false;
+                haveReserve[i + 1] = true;
+                return Math.min(min0, min1);
+            } else {
+                return 1 + minimize(i + 1, j);
+            }
+        }
+
+        // throw new IllegalStateException();
+    }
+
+    boolean ok(int i) {
+        return i < 0 || i >= teams || (haveBoat[i] && !haveReserve[i]);
+    }
+
+    void reduce3() {
+        missed = 0;
+        int i = 0;
+        while (i < teams) {
+            if (ok(i)) {
+                ++i;
+                continue;
+            }
+            int j = i;
+            while (j < teams && (!ok(j + 1) || !ok(j + 2))) {
+                ++j;
+            }
+            missed = missed + minimize(i, j);
+        }
+    }
+
     void solve() {
         reduce1();
-        reduce2();
+//        reduce2();
+        missed = minimize(0, teams - 1);
     }
 
     void run() {
         read();
         solve();
-//        write();
+        System.out.println(missed);
     }
 }
