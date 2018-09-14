@@ -45,7 +45,7 @@ public class Natjecanje {
         }
     }
 
-    void reduce1() { // use spares where team needs thiers
+    void reduce1() { // use spares where team needs theirs
         for (int i = 0; i < teams; ++i) {
             if (!haveBoat[i] && haveReserve[i]) {
                 haveBoat[i] = true;
@@ -121,11 +121,15 @@ public class Natjecanje {
     }
 
     boolean simple(int team) {
-        if (team < 0 || team >= teams) return true;
-        if (haveBoat[team] && !haveReserve[team]) return true;
+        if (team < 0 || team >= teams) {
+            return true;
+        }
+        if (haveBoat[team] && !haveReserve[team]) {
+            return true;
+        }
         return false;
     }
-    
+
     void reduce3() {
         missed = 0;
         int i = 0;
@@ -135,9 +139,11 @@ public class Natjecanje {
                 continue;
             }
             int j = i;
-            while (!simple(j+1)) { ++j; }
+            while (!simple(j + 1)) {
+                ++j;
+            }
             missed = missed + minimize(i, j);
-            i=j+1;
+            i = j + 1;
         }
     }
 
@@ -145,7 +151,6 @@ public class Natjecanje {
         reduce1();
         reduce2();
         reduce3();
-//        missed = minimize(0, teams - 1);
     }
 
     void run() {
