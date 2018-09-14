@@ -120,30 +120,32 @@ public class Natjecanje {
         // throw new IllegalStateException();
     }
 
-    boolean ok(int i) {
-        return i < 0 || i >= teams || (haveBoat[i] && !haveReserve[i]);
+    boolean simple(int team) {
+        if (team < 0 || team >= teams) return true;
+        if (haveBoat[team] && !haveReserve[team]) return true;
+        return false;
     }
-
+    
     void reduce3() {
         missed = 0;
         int i = 0;
         while (i < teams) {
-            if (ok(i)) {
+            if (simple(i)) {
                 ++i;
                 continue;
             }
             int j = i;
-            while (j < teams && (!ok(j + 1) || !ok(j + 2))) {
-                ++j;
-            }
+            while (!simple(j+1)) { ++j; }
             missed = missed + minimize(i, j);
+            i=j+1;
         }
     }
 
     void solve() {
         reduce1();
-//        reduce2();
-        missed = minimize(0, teams - 1);
+        reduce2();
+        reduce3();
+//        missed = minimize(0, teams - 1);
     }
 
     void run() {
