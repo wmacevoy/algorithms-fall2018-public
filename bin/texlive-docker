@@ -1,2 +1,2 @@
 #!/bin/bash
-docker run -i -a stdin -a stdout -v "$PWD":/home -w /home texlive:latest "$@"
+docker run -i -a stdin -a stdout -v "$PWD":/data -w /data texlive:latest "$@"
