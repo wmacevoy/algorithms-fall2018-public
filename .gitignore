@@ -32,3 +32,5 @@
 *.app
 /algorithms/nbproject/
 /algorithms/target/
+/natjecanje/nbproject/
+/natjecanje/target/
