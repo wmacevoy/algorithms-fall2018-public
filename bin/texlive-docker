@@ -1,2 +1,0 @@
-#!/bin/bash
-docker run -i -a stdin -a stdout -v "$PWD":/data -w /data texlive:latest "$@"
