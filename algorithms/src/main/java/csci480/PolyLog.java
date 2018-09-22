@@ -160,7 +160,9 @@ public class PolyLog {
             return Math.exp((q / p) * x);
         } else {
             double z = -1 / q * Math.log(y / c) + Math.log(-q / p);
-            if (z < 1) return Double.NaN;
+            if (z < 1) {
+                return Double.NaN;
+            }
             double x = Math.max(1 + Math.sqrt(2 * (z - 1)), z);
             double eps0 = Double.MAX_VALUE, eps1 = Double.MAX_VALUE;
             for (;;) {
