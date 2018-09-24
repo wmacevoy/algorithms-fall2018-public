@@ -72,6 +72,7 @@ RUN echo skip tlmgr install \\
 #
 RUN echo skip tlmgr install \\
     asymptote \\
+    bera \\
     booktabs \\
     ccicons \\
     collection-fontsrecommended \\
@@ -86,14 +87,19 @@ RUN echo skip tlmgr install \\
     mathpazo \\
     microtype \\
     ms \\
+    paralist \\
+    placeins \\
     relenc \\
     setspace \\
     siunitx \\
+    soul \\
     textcase \\
     titlesec \\
     tufte-latex \\
     units \\
     xcolor \\
+    xifthen \\
+    xindy \\
     xkeyval
 EOF
 fi
