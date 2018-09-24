@@ -46,6 +46,7 @@ RUN echo skip tlmgr install \
 #
 RUN tlmgr install \
     asymptote \
+    bera \
     booktabs \
     ccicons \
     collection-fontsrecommended \
@@ -60,12 +61,18 @@ RUN tlmgr install \
     mathpazo \
     microtype \
     ms \
+    paralist \
+    palatino \
+    placeins \
     relenc \
     setspace \
     siunitx \
+    soul \
     textcase \
     titlesec \
     tufte-latex \
     units \
     xcolor \
+    xifthen \
+    xindy \
     xkeyval
