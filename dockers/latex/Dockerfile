@@ -35,16 +35,14 @@ FROM "algorithms-fall2018-public/latex-base:latest"
 #
 # scheme-full (5+GB, 2+hours) - comment out to ignore
 #
-RUN true # tlmgr install \
-    scheme-full \
-    #end
+RUN true || tlmgr install \
+    scheme-full
 
 #
 # min (remove true # below and comment out scheme-full above to use)
 #
-RUN true # tlmgr install \
-    collection-fontsrecommended \
-    #end
+RUN true || tlmgr install \
+    collection-fontsrecommended
 #
 # tufte (remove true # below and comment out scheme-full above to use)
 #
@@ -72,5 +70,5 @@ RUN tlmgr install \
     tufte-latex \
     units \
     xcolor \
-    xkeyval \
-    #end
+    xkeyval
+
