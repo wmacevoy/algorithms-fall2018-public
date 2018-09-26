@@ -65,6 +65,9 @@ public class Stats {
     }
 
     public double requiredSamples(double relativeError) {
+        if (samples < MIN_SAMPLES) {
+            return MIN_SAMPLES;
+        }
         return requiredSamples(relativeError, mean(), stddev());
     }
 
